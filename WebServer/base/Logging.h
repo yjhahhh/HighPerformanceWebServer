@@ -4,7 +4,7 @@
 #include"LogStream.h"
 #include"Timestamp.h"
 #include<unistd.h>
-
+#include<functional>
 
 
 
@@ -12,8 +12,8 @@
 class Logger : noncopyable
 {
 public:
-    typedef void (*OutputFunc)(const char*, size_t);
-    typedef void (*FlushFunc)();
+    typedef std::function<void(const char*, size_t)> OutputFunc;
+    typedef std::function<void()> FlushFunc;
     enum LogLevel
     {
         TRACE = 0,  //指出比DEBUG粒度更细的一些信息事件（开发过程中使用）

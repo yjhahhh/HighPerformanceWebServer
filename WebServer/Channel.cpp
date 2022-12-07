@@ -51,11 +51,11 @@ void Channel::handleEventWithGuard(Timestamp receiveTime)
     }
     if(revents_ & EPOLLERR)
     {
-        //对读端或写端已关闭的连接进行读或写，关闭连接即可
+        //对读端或写端已关闭的连接进行读或写，不需要关闭连接！在读回调中recv=0时关闭连接
         if(logHup_)
             LOG_WARN << "fd = " << fd_ << " Channel::handleEvent() EPOLLERR";
-        if(closeCallBack_)
-            closeCallBack_();
+        if(errorCallback_)
+            errorCallback_();
     }
     if(revents_ & (EPOLLIN | EPOLLPRI | EPOLLRDHUP))
     {

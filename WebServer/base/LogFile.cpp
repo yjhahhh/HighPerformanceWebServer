@@ -108,7 +108,7 @@ string LogFile::nextLogFileName(string baseName, time_t* now)
     tm tmbuf;
     *now = time(nullptr);
     gmtime_r(now, &tmbuf);
-    strftime(timebuf, sizeof(timebuf), ".%Y%M%d-%T.", &tmbuf);
+    strftime(timebuf, sizeof(timebuf), ".%Y%m%d-%X.", &tmbuf);
     filename += timebuf;
 
     filename += getHostName();

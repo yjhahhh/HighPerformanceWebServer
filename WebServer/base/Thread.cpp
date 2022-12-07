@@ -1,5 +1,6 @@
 #include"Thread.h"
 #include<sys/prctl.h>
+#include"Logging.h"
 using namespace std;
 
 __thread pid_t CurrentThread::t_cachedTid = 0;
@@ -52,6 +53,7 @@ void Thread::start()
         started_ = false;
         delete data;
         //记录日志
+        LOG_SYSFATAL << "Failed in pthread_create";
     }
     else
     {

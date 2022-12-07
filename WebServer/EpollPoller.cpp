@@ -28,7 +28,7 @@ EpollPoller::~EpollPoller()
     close(epollfd_);
 }
 
-Timestamp EpollPoller::loop(int timeoutMs, ChannelList& activeChannels)
+Timestamp EpollPoller::poll(int timeoutMs, ChannelList& activeChannels)
 {
     int numEvents = epoll_wait(epollfd_, events_.data(), static_cast<int>(events_.size()), timeoutMs);
     Timestamp now = Timestamp::now();

@@ -8,6 +8,7 @@
 #include<string>
 #include"InetAddress.h"
 #include"base/StringPiece.h"
+#include <boost/any.hpp>
 
 
 class EventLoop;
@@ -17,6 +18,7 @@ class TcpConnection;
 class Buffer;
 
 typedef std::shared_ptr<TcpConnection> TcpConnectionPtr;
+typedef std::weak_ptr<TcpConnection> WeakTcpConnectionPtr;
 typedef std::function<void(const TcpConnectionPtr&)> ConnectionCallback;
 typedef std::function<void(const TcpConnectionPtr&)> CloseCallback;
 typedef std::function<void(const TcpConnectionPtr&)> WriteCompleteCallback;
@@ -83,6 +85,18 @@ public:
     Buffer* outputBuffer()
     {
         return &outputBuffer_;
+    }
+    void setContext(const boost::any& context)
+    {
+        context_ = context;
+    }
+    const boost::any& getContext() const
+    { 
+        return context_; 
+    }
+    boost::any* getMutableContext()
+    { 
+        return &context_; 
     }
 
     //发送消息
@@ -153,6 +167,7 @@ private:
     CloseCallback closeCallback_;   //关闭连接回调
     Buffer inputBUffer_;    //输入缓冲区
     Buffer outputBuffer_;   //输出缓冲区
+    boost::any context_;    //用户自定义变量
 
 };
 

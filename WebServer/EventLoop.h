@@ -6,7 +6,7 @@
 #include<any>
 #include<vector>
 #include"TimerId.h"
-
+#include<boost/any.hpp> 
 
 class Channel;
 class Poller;
@@ -60,6 +60,20 @@ public:
     //获取当前线程的EventLoop对象指针
     static EventLoop* getEventLoopOfCurrentThread();
 
+    void setContext(const boost::any& context)
+    {
+        context_ = context;
+    }
+    const boost::any& getContext() const
+    { 
+        return context_; 
+    }
+    boost::any* getMutableContext()
+    { 
+        return &context_; 
+    }
+
+
 private:
     typedef std::vector<Channel*> ChannelList;
 
@@ -88,7 +102,8 @@ private:
 
     ChannelList activeChannels_;    //激活事件的通道列表
     std::vector<Functor> pendingFunctors_;  //待调用函数列表
-
+    
+    boost::any context_;    //用户自定义变量
 };
 
 

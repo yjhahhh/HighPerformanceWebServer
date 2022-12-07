@@ -11,7 +11,7 @@ public:
     EpollPoller(EventLoop* loop);
     virtual ~EpollPoller();
 
-    virtual Timestamp loop(int timeoutMs, ChannelList& activeChannels) override;
+    virtual Timestamp poll(int timeoutMs, ChannelList& activeChannels) override;
     virtual void updateChannel(Channel* channel) override;
     //在channels_中移除
     virtual void removeChannel(Channel* channel) override;

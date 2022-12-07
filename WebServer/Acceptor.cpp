@@ -7,11 +7,11 @@ using namespace std;
 
 Acceptor::Acceptor(EventLoop* loop, const InetAddress&addr, bool reuseport)
     : listening_(false), loop_(loop), 
-    idelFd_(open("/dev/null", O_RDONLY | O_CLOEXEC)),
+    idleFd_(open("/dev/null", O_RDONLY | O_CLOEXEC)),
     acceptSocket_(sockets::createNonblockingOrDie()),
     acceptChannel_(loop, acceptSocket_.fd())
 {
-    assert(idelFd_ >= 0);
+    assert(idleFd_ >= 0);
     acceptSocket_.setReuseAddr(true);
     acceptSocket_.setReusePort(reuseport);
     acceptSocket_.bindAddress(addr);
@@ -22,7 +22,7 @@ Acceptor::~Acceptor()
 {
     acceptChannel_.disableAll();
     acceptChannel_.remove();
-    sockets::close(idelFd_);
+    sockets::close(idleFd_);
 }
 
 void Acceptor::listen()
@@ -55,10 +55,10 @@ void Acceptor::handleRead()
         if(EMFILE)
         {
             //打开的文件描述符过多
-            ::close(idelFd_);
-            idelFd_ = ::accept(acceptSocket_.fd(), nullptr, nullptr);
-            ::close(idelFd_);
-            idelFd_ = open("/dev/null", O_RDONLY | O_CLOEXEC);
+            ::close(idleFd_);
+            idleFd_ = ::accept(acceptSocket_.fd(), nullptr, nullptr);
+            ::close(idleFd_);
+            idleFd_ = open("/dev/null", O_RDONLY | O_CLOEXEC);
         }
     }
 }

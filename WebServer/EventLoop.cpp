@@ -58,7 +58,7 @@ void EventLoop::loop()
     while(!quit_)
     {
         activeChannels_.clear();    //清除激活事件的通道列表
-        epollReturnTime_ = poller_->loop(PollTImeMs, activeChannels_);
+        epollReturnTime_ = poller_->poll(PollTImeMs, activeChannels_);
         if(Logger::logLevel_ <= Logger::TRACE)
         {
             printActiveChannels();

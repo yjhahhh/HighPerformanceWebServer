@@ -36,6 +36,7 @@ TcpConnection::TcpConnection(EventLoop* loop, const string& nameArg, int sockfd,
     channel_->setErrorCallback(bind(&TcpConnection::handleError, this));
     LOG_DEBUG << "TcpConnection::ctor[" << name_ << "] at " << this << " fd = " << sockfd;
     socket_->setKeepAlive(true);
+
 }
 
 TcpConnection::~TcpConnection()
@@ -211,14 +212,13 @@ void TcpConnection::handleWrite()
 void TcpConnection::handleClose()
 {
     loop_->assertInLoopThread();
-    LOG_TRACE << "fd = " << channel_->fd();
     assert(Connected == state_ || DisConnecting == state_);
     setState(DisConnected);
-    channel_->disableAll();
+    channel_->disableAll(); //在epoll关注的描述符列表中注销
     TcpConnectionPtr guardThis(shared_from_this());
     connectionCallback_(guardThis);
 
-    closeCallback_(guardThis);
+    closeCallback_(guardThis);  //从TcpServer中移除，应该被析构
 }
 
 void TcpConnection::handleError()
@@ -233,7 +233,7 @@ void TcpConnection::shutdown()
 {
     if(Connected == state_)
     {
-        setState(DisConnected);
+        setState(DisConnecting);
         loop_->runInLoop(bind(&TcpConnection::shutdownInLoop, this));
     }
 }
@@ -245,7 +245,6 @@ void TcpConnection::shutdownInLoop()
     {
         socket_->shutdownWrite();
     }
-
 }
 
 void TcpConnection::forceClose()

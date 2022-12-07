@@ -5,7 +5,8 @@ using namespace std;
 
 EventLoopThread::EventLoopThread(const ThreadInitCallback& cb, const string& name)
     : exiting_(false), loop_(nullptr),
-    thread_(bind(&EventLoopThread::threadFunc, this), name), latch_(1), callback_(cb)
+    thread_(bind(&EventLoopThread::threadFunc, this), name), 
+    latch_(1), callback_(cb)
 {
 
 }

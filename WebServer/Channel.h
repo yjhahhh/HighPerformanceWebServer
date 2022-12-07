@@ -62,7 +62,7 @@ public:
     //判断有无事件发生
     bool isNoneEvent() const
     {
-        return NoneEvent == revents_;
+        return NoneEvent == events_;
     }
     //通道关注可读事件，调用update()把这个通道注册到EventLoop所持有的poller_对象中
     void enableReading()
@@ -97,12 +97,12 @@ public:
     //判断通道是否有可读事件
     bool isReading() const
     {
-        return ReadEvent & revents_;
+        return ReadEvent & events_;
     }
     //判断通道是否有可写事件
     bool isWriting() const
     {
-        return WriteEvent & revents_;
+        return WriteEvent & events_;
     }
     //返回index_
     int index() const

@@ -63,7 +63,7 @@ void TcpServer::newConnection(int sockfd, const InetAddress& peerAddr)
     conn->setMessageCallback(messageCallback_);
     conn->setCloseCallback(bind(&TcpServer::removeConnection,  this, placeholders::_1));
 
-    loop_->runInLoop(bind(&TcpConnection::connectEstablished, conn));
+    conn->getLoop()->runInLoop(bind(&TcpConnection::connectEstablished, conn));
 }
 
 void TcpServer::removeConnection(const TcpConnectionPtr& conn)

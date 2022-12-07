@@ -36,7 +36,7 @@ private:
 
     bool listening_;    //监听状态
     EventLoop* loop_;   //所属的EventLoop
-    int idelFd_;    //空闲的文件描述符，用于fd资源不够用时, 可以空一个出来作为新建连接connfd
+    int idleFd_;    //空闲的文件描述符，用于fd资源不够用时, 可以空一个出来作为新建连接connfd
     Socket acceptSocket_;   //用于接受连接的套接字
     Channel acceptChannel_; //接受连接通道 ，监听connfd
     NewConnectionCallback  newConneptCallback_; //新建 连接的回调

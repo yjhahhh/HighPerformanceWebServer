@@ -28,10 +28,8 @@ public:
     已满缓冲队列buffers_，避免在写文件过程中，锁住缓冲和队列，导致前端无法写数据到后端缓冲
     */
     void threadFunc();
-
     //主线程调用
     void start();
-    
 
 private:
     typedef FixedBuffer<LargeBuffer> Buffer;

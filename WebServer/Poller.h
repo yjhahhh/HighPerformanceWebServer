@@ -23,7 +23,7 @@ public:
 
     }
     //返回调用完epoll_wait()的时间
-    virtual Timestamp loop(int timeoutMs, ChannelList& activeChannels) = 0;
+    virtual Timestamp poll(int timeoutMs, ChannelList& activeChannels) = 0;
     //更新监听通道的事件
     virtual void updateChannel(Channel* channel) = 0;
     //删除监听通道

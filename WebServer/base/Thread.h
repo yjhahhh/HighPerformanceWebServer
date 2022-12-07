@@ -39,8 +39,7 @@ public:
     static void cacheTid()
     {
         t_cachedTid = static_cast<pid_t>(syscall(SYS_gettid));
-        int n = snprintf(t_tidString, sizeof(t_tidString), "%5d", t_cachedTid);
-        
+        snprintf(t_tidString, sizeof(t_tidString), "%5d", t_cachedTid);
     }
 private:
     static __thread pid_t t_cachedTid;    //每个线程都有一份实体
