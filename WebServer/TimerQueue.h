@@ -3,6 +3,7 @@
 #include"base/noncopyable.h"
 #include<vector>
 #include<map>
+#include<set>
 #include"Timer.h"
 #include"TimerId.h"
 #include"Channel.h"
@@ -25,7 +26,7 @@ public:
 private:
     typedef long long ll;
     typedef std::pair<Timestamp, Timer*> Entry;
-    typedef std::map<Timestamp, Timer*> TimerList;
+    typedef std::set<Entry> TimerList;
     typedef std::map<Timer*, ll> ActiveTimerSet;
 
     //以下成员函数只可能在其所属的I/O线程中调用，因而不必加锁

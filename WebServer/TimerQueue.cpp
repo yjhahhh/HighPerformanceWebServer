@@ -104,7 +104,7 @@ void TimerQueue::cancelInLoop(const TimerId& timerId)
 {
     loop_->assertInLoopThread();
 
-    auto itor = timers_.find(timerId.timer_->expration());    //查找该dingshiq
+    auto itor = timers_.find(Entry(timerId.timer_->expration(), timerId.timer_));    //查找该dingshiq
     if(itor != timers_.end())
     {
         timers_.erase(itor);
@@ -141,7 +141,7 @@ void TimerQueue::handleRead()
 vector<TimerQueue::Entry> TimerQueue::getExpired(const Timestamp& now)
 {
     loop_->assertInLoopThread();
-    auto itor = timers_.lower_bound(now);   //返回第一个不到期的定时器
+    auto itor = timers_.lower_bound(Entry(now, reinterpret_cast<Timer*>(UINTPTR_MAX)));   //返回第一个不到期的定时器
 
     vector<Entry> expired(timers_.begin(), itor);
     timers_.erase(timers_.begin(), itor);   //在timers_中删除到期的定时器
