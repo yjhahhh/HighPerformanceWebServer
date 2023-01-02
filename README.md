@@ -1,6 +1,6 @@
 # A C++ High Performance Web Server
 ## 概述   
-该WebServer基于muoduo网络库实现，在实现细节上很大程度上学习了陈硕的muduo网络库，同样遵循了one loop pre thread 的思想。   
+该WebServer基于muduo网络库实现，在实现细节上很大程度上学习了陈硕的muduo网络库，同样遵循了one loop pre thread 的思想。   
 本项目为C++编写的多线程Web服务器，能解析简单的GET/POST请求，支持HTTP长连接，支持管线化请求，能踢掉空闲的连接，实现了高性能的异步日志功能。   
 > |Ⅰ|Ⅱ|Ⅲ|Ⅳ|Ⅴ|Ⅵ|
 > |:--:|:--:|:--:|:--:|:--:|:--:|
