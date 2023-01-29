@@ -78,7 +78,7 @@ void AsyncLogging::threadFunc()
         assert(buffersToWrite.empty());
 
         {
-            MutexLockGuard lock();  //加锁
+            MutexLockGuard lock(mutex_);  //加锁
             if(buffers_.empty())
             {
                 //暂时没太多数据，等待flushInterval_秒
